@@ -1,0 +1,5 @@
+﻿  GameZone.c
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(220,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(221,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(222,40): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
+  Tank.vcxproj -> D:\WPS\КПО\С\Курсач\Tank\Tank\Debug\Tank.exe

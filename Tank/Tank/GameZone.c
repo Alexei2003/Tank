@@ -211,6 +211,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InitializationTank(5);
 	InitializationAI();
 
+
 	thDraw = (HANDLE)_beginthread(Draw, 0, 0);
 	thGame = (HANDLE)_beginthread(Game, 0, 0);
 	thReload = (HANDLE)_beginthread(Reload, 0, 0);

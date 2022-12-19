@@ -6,9 +6,9 @@
 #define	ZONE_LEFT 350
 
 RECT base_wall[2];
-unsigned char numbWall=68;
+unsigned char numbWall=0;
 
-WALL *wall;
+WALL wall[68];
 
 HPEN     hpNoBorder, hpBorder;
 HBRUSH   hbrWall;
@@ -44,8 +44,6 @@ void InitializationWall(){
 
 	SetRect(&base_wall[0],4 ,4 ,30,17);
 	SetRect(&base_wall[1],4 ,17,17,30);
-
-	wall = (WALL*)malloc(sizeof(WALL) * 68);
 
 	numbWall = HorizontalLineWall(numbWall,14, 81, 60);
 

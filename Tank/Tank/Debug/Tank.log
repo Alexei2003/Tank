@@ -2,4 +2,17 @@
 D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(214,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
 D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(215,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
 D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(216,40): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
+  Logic.c
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(33,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(34,55): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(38,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(39,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(43,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(44,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(48,58): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(49,35): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(346,8): warning C4244: функция: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Shell.c
+  Tank.c
+  Создание кода...
   Tank.vcxproj -> D:\WPS\КПО\С\Курсач\Tank\Tank\Debug\Tank.exe

@@ -19,7 +19,7 @@ void InitializationShell() {
 	while (NULL == headShell) {
 		headShell = (SHELL*)(malloc(sizeof(SHELL)));
 	}
-	memset(&headShell, 0, sizeof(SHELL));
+	memset(headShell, 0, sizeof(SHELL));
 
 	finShell = headShell;
 

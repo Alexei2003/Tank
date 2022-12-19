@@ -15,7 +15,7 @@ typedef struct _WALL {
 
 extern RECT base_wall[2];
 extern unsigned char numbWall;
-extern WALL *wall;
+extern WALL wall[68];
 
 void InitializationWall();
 void FinalizeWall();

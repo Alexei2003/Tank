@@ -6,7 +6,7 @@
 #define	ZONE_LEFT 350
 
 RECT base_wall[2];
-unsigned char numbWall=0;
+unsigned char numbWall=68;
 
 WALL *wall;
 
@@ -37,12 +37,11 @@ unsigned char VerticalLineWall(unsigned char StartInd, unsigned char numb, short
 	return StartInd += numb;
 }
 
-void InitializationWall(unsigned char numb){
+void InitializationWall(){
 	hbrWall = CreateSolidBrush(RGB(0,0,100));
 	hpNoBorder = CreatePen(PS_SOLID,0,RGB(0,0,100));
 	hpBorder = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 
-	numbWall = numb;
 	SetRect(&base_wall[0],4 ,4 ,30,17);
 	SetRect(&base_wall[1],4 ,17,17,30);
 

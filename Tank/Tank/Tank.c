@@ -3,11 +3,11 @@
 #define ENEMY 1
 #define BASE_SPEED 5
 #define BASE_DAMAGE 1
-#define BASE_HP 0
+#define BASE_HP 1
 #define BASE_RELOAD 2
 
 BASE_TANK baseTank;
-TANK tank[1];
+TANK tank[5];
 unsigned char numbTank;
 
 HBRUSH   hbrPlayer, hbrPalayerLight, hbrEnemy, hbrEnemyLight;
@@ -56,11 +56,27 @@ void InitializationTank(unsigned char numb) {
 	memset(tank,0, sizeof(TANK)* numbTank);
 	tank[PLAYER].x = ZONE_LEFT+410;
 	tank[PLAYER].y = 410;
-	tank[PLAYER].speed = BASE_SPEED;
-	tank[PLAYER].damage = BASE_DAMAGE;
-	tank[PLAYER].hp = BASE_HP;
-	tank[PLAYER].reload = BASE_RELOAD;
-	tank[PLAYER].timeToReload = 0;
+
+	tank[1].x = 370;
+	tank[1].y = 10;
+	tank[2].x = 1180;
+	tank[2].y = 10;
+	tank[3].x = 370;
+	tank[3].y = 840;
+	tank[4].x = 1180;
+	tank[4].y = 840;
+
+	tank[1].cell = 0;
+	tank[2].cell = 1;
+	tank[3].cell = 17;
+	tank[4].cell = 18;
+
+	for (i = 0; i < numbTank; i++) {
+		tank[i].speed = BASE_SPEED;
+		tank[i].damage = BASE_DAMAGE;
+		tank[i].hp = BASE_HP;
+		tank[i].reload = BASE_RELOAD;
+	}
 }
 
 void FinalizeTank() {
@@ -71,33 +87,49 @@ void FinalizeTank() {
 }
 
 
-void DrawTank(HDC hdc) {	
+void DrawTank(HDC hdc) {
 	SaveDC(hdc);
 	SelectObject(hdc, hpTank);
-	int i,x,y,k,n,j;
+	int i, x, y, k, n, j;
 
 	unsigned char orient;
 	for (j = 0; j < numbTank; j++) {
 		orient = tank[j].orient;
 
 		if (tank[j].colour) {
-			SelectObject(hdc, hbrPalayerLight);
+			if (j) {
+				SelectObject(hdc, hbrEnemyLight);
+			}
+			else {
+				SelectObject(hdc, hbrPalayerLight);
+			}
+		}
+		else {
+			if (j) {
+				SelectObject(hdc, hbrEnemy);
+			}
+			else {
+				SelectObject(hdc, hbrPlayer);
+			}
+
+		}
+
+		// Основные прямоугольники танка
+		for (i = 0; i < 2; i++) {
+			Rectangle(hdc, tank[j].x + baseTank.orient[orient][i].left, tank[j].y + baseTank.orient[orient][i].top,
+				tank[j].x + baseTank.orient[orient][i].right, tank[j].y + baseTank.orient[orient][i].bottom);
+		}
+
+		if (j) {
+			SelectObject(hdc, hbrEnemy);
 		}
 		else {
 			SelectObject(hdc, hbrPlayer);
 		}
 
-		// Основные прямоугольники танка
-		for (i = 0; i < 2; i++) {
-			Rectangle(hdc, tank[j].x + baseTank.orient[orient][i].left , tank[j].y + baseTank.orient[orient][i].top,
-				           tank[j].x + baseTank.orient[orient][i].right, tank[j].y + baseTank.orient[orient][i].bottom);
-		}
-
-		SelectObject(hdc, hbrPlayer);
-
 		for (i = 2; i < 5; i++) {
-			Rectangle(hdc, tank[j].x + baseTank.orient[orient][i].left , tank[j].y + baseTank.orient[orient][i].top,
-						   tank[j].x + baseTank.orient[orient][i].right, tank[j].y + baseTank.orient[orient][i].bottom);
+			Rectangle(hdc, tank[j].x + baseTank.orient[orient][i].left, tank[j].y + baseTank.orient[orient][i].top,
+				tank[j].x + baseTank.orient[orient][i].right, tank[j].y + baseTank.orient[orient][i].bottom);
 		}
 
 		// переделать
@@ -106,10 +138,20 @@ void DrawTank(HDC hdc) {
 		y = 0;
 
 		if (tank[j].colour) {
-			SelectObject(hdc, hbrPlayer);
+			if (j) {
+				SelectObject(hdc, hbrEnemy);
+			}
+			else {
+				SelectObject(hdc, hbrPlayer);
+			}
 		}
 		else {
-			SelectObject(hdc, hbrPalayerLight);
+			if (j) {
+				SelectObject(hdc, hbrEnemyLight);
+			}
+			else {
+				SelectObject(hdc, hbrPalayerLight);
+			}
 		}
 
 		for (n = 0; n < 2; n++) {
@@ -126,8 +168,8 @@ void DrawTank(HDC hdc) {
 			}
 
 			for (k = 0; k < 6; k++) {
-				Rectangle(hdc, tank[j].x + baseTank.orient[orient][i].left+x , tank[j].y + baseTank.orient[orient][i].top+y,
-					           tank[j].x + baseTank.orient[orient][i].right+x, tank[j].y + baseTank.orient[orient][i].bottom+y);
+				Rectangle(hdc, tank[j].x + baseTank.orient[orient][i].left + x, tank[j].y + baseTank.orient[orient][i].top + y,
+					tank[j].x + baseTank.orient[orient][i].right + x, tank[j].y + baseTank.orient[orient][i].bottom + y);
 				switch (orient)
 				{
 				case UP:
@@ -169,11 +211,12 @@ void DrawTank(HDC hdc) {
 
 	RestoreDC(hdc, -1);
 }
+
 void DrawAllTank(HDC hdc) {
-	int i, x, y, tankX, tankY, n, k;
+	int i, x, y, tankX = 0, tankY = 0, n, k;
 	SaveDC(hdc);
 
-	for (int j = 0; j < numbTank; j++) {
+	for (int j = 1; j < numbTank; j++) {
 		SelectObject(hdc, hpTank);
 		if (tank[j].colour) {
 			SelectObject(hdc, hbrEnemyLight);
@@ -184,15 +227,15 @@ void DrawAllTank(HDC hdc) {
 
 		// Основные прямоугольники танка
 		for (i = 0; i < 2; i++) {
-			Rectangle(hdc, baseTank.orient[UP][i].left, baseTank.orient[UP][i].top,
-				baseTank.orient[UP][i].right, baseTank.orient[UP][i].bottom);
+			Rectangle(hdc, baseTank.orient[UP][i].left + tankX, baseTank.orient[UP][i].top + tankY,
+				baseTank.orient[UP][i].right + tankX, baseTank.orient[UP][i].bottom + tankY);
 		}
 
 		SelectObject(hdc, hbrEnemy);
 
 		for (i = 2; i < 5; i++) {
-			Rectangle(hdc, baseTank.orient[UP][i].left, baseTank.orient[UP][i].top,
-				baseTank.orient[UP][i].right, baseTank.orient[UP][i].bottom);
+			Rectangle(hdc, baseTank.orient[UP][i].left + tankX, baseTank.orient[UP][i].top + tankY,
+				baseTank.orient[UP][i].right + tankX, baseTank.orient[UP][i].bottom + tankY);
 		}
 
 		// переделать
@@ -211,19 +254,20 @@ void DrawAllTank(HDC hdc) {
 			y = 0;
 
 			for (k = 0; k < 6; k++) {
-				Rectangle(hdc, baseTank.orient[UP][i].left + x, baseTank.orient[UP][i].top + y,
-					baseTank.orient[UP][i].right + x, baseTank.orient[UP][i].bottom + y);
+				Rectangle(hdc, baseTank.orient[UP][i].left + x + tankX, baseTank.orient[UP][i].top + y + tankY,
+					baseTank.orient[UP][i].right + x + tankX, baseTank.orient[UP][i].bottom + y + tankY);
 				y += 9;
 			}
 			x += 39;
 		}
 		if (0 == tank[j].hp) {
 			SelectObject(hdc, hpCross);
-			MoveToEx(hdc, baseTank.orient[UP][0].left, baseTank.orient[UP][0].top, NULL);
-			LineTo(hdc, baseTank.orient[UP][1].right, baseTank.orient[UP][1].bottom);
-			MoveToEx(hdc, baseTank.orient[UP][0].left, baseTank.orient[UP][0].bottom, NULL);
-			LineTo(hdc, baseTank.orient[UP][1].right, baseTank.orient[UP][1].top);
+			MoveToEx(hdc, baseTank.orient[UP][0].left + tankX, baseTank.orient[UP][0].top + tankY, NULL);
+			LineTo(hdc, baseTank.orient[UP][1].right + tankX, baseTank.orient[UP][1].bottom + tankY);
+			MoveToEx(hdc, baseTank.orient[UP][0].left + tankX, baseTank.orient[UP][0].bottom + tankY, NULL);
+			LineTo(hdc, baseTank.orient[UP][1].right + tankX, baseTank.orient[UP][1].top + tankY);
 		}
+		tankY += 60;
 	}
 
 	RestoreDC(hdc, -1);

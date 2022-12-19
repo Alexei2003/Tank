@@ -14,11 +14,14 @@ SHELL* finShell;
 HBRUSH   hbrShell;
 
 void InitializationShell() {
-	SetRect(&baseShell, 0, 0, SHELL_SIZE+1, SHELL_SIZE+1);
-	headShell = (SHELL*)(malloc(sizeof(SHELL)));
-	memset(headShell, 0, sizeof(SHELL));
+	SetRect(&baseShell, 0, 0, SHELL_SIZE + 1, SHELL_SIZE + 1);
+	headShell = NULL;
+	while (NULL == headShell) {
+		headShell = (SHELL*)(malloc(sizeof(SHELL)));
+	}
+	memset(&headShell, 0, sizeof(SHELL));
 
-	finShell=headShell;
+	finShell = headShell;
 
 	hbrShell = CreateSolidBrush(RGB(100, 0, 0));
 }
@@ -36,7 +39,6 @@ void DrawShell(HDC hdc) {
 
 	SaveDC(hdc);
 	SelectObject(hdc, hbrShell);
-
 	for (SHELL* now = headShell->next; NULL != now; now = now->next) {
 		Rectangle(hdc, baseShell.left + now->x, baseShell.left + now->y, baseShell.right + now->x, baseShell.bottom + now->y);
 	}

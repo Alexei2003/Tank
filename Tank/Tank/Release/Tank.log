@@ -1,0 +1,20 @@
+﻿  GameZone.c
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(214,19): warning C4013: _beginthread: нет определения; предполагается "extern" с возвратом типа "int"
+  Logic.c
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(30,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(31,55): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(35,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(36,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(40,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(41,26): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(45,58): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(46,35): warning C4244: =: преобразование "LONG" в "short", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\Logic.c(343,8): warning C4244: функция: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Shell.c
+  Tank.c
+  Wall.c
+  Создание кода
+  Previous IPDB not found, fall back to full compilation.
+  All 32 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  Tank.vcxproj -> D:\WPS\КПО\С\Курсач\Tank\Tank\Release\Tank.exe

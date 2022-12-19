@@ -31,6 +31,8 @@ typedef struct _TANK {
 	unsigned char orient;
 	unsigned char colour;
 	unsigned char timeToReload;
+	unsigned char cell;
+	unsigned char move;
 
 
 	unsigned char hp;
@@ -40,7 +42,8 @@ typedef struct _TANK {
 }TANK;
 
 extern BASE_TANK baseTank;
-extern TANK tank[1];
+extern TANK tank[5];
+extern unsigned char numbTank;
 
 void InitializationTank(unsigned char numb);
 void FinalizeTank();

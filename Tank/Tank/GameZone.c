@@ -22,8 +22,8 @@ const wchar_t* const GameZonelassClass = L"Танчики";
 HDC      hdcBack;
 HBITMAP  hbmBack;
 RECT     rcClient;
-HANDLE thGame, thDraw, thReload;
-HWND hwndGameWindow,hmndProgressBar;
+HANDLE	 thGame, thDraw, thReload;
+HWND	  hwndGameWindow,hmndProgressBar;
 
 char T0=0, T1=0;
 char F0=1, F1=1, F2=1;
@@ -54,17 +54,16 @@ void FinalizeBackBuffer()
 	}
 }
 
-void Draw() {
+void  Draw() {
 	while (F0)
 	{
 		Sleep(FrameTime);
 		InvalidateRect(hwndGameWindow, NULL, 0);
 	}
 	F0 = 1;
-	_endthread();
 }
 
-void Game() {
+void  Game() {
 	while (F1)
 	{
 		T1 = 1;
@@ -74,17 +73,17 @@ void Game() {
 		}
 		CheckingCollisionsShell();
 		T1 = 0;
+		AI();
 		Sleep(GameSpeed);
 	}
 	F1 = 1;
-	_endthread();
 }
 
-void Reload() {
+void  Reload() {
 	while (F2)
 	{
 		TankReload();
-		if (0!=tank[PLAYER].timeToReload) {
+		if (0 != tank[PLAYER].timeToReload) {
 			SendMessage(hmndProgressBar, PBM_STEPIT, 0, 0);
 			Sleep(ReloadTime);
 			SendMessage(hmndProgressBar, PBM_STEPIT, 0, 0);
@@ -107,7 +106,6 @@ void Reload() {
 		}
 	}
 	F2 = 1;
-	_endthread();
 }
 
 
@@ -119,11 +117,17 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 
 	// Обработка сообщений
 	switch (uMsg) {
+		GetClientRect(hWnd, &rcClient);
+		InitializeBackBuffer(hWnd, rcClient.right, rcClient.bottom);
+	case WM_CREATE:
+		
+		break;
 
 	case WM_SIZE:
 		GetClientRect(hWnd, &rcClient);
 		FinalizeBackBuffer();
 		InitializeBackBuffer(hWnd, rcClient.right, rcClient.bottom);
+		break;
 
 	case WM_KEYDOWN:
 		switch (wParam) {
@@ -147,22 +151,23 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 
 	// Риссования
 	case WM_PAINT:
-		T0 = 1;
-		while (T1) {
-			Sleep(10);
-		}
 
 		Rectangle(hdcBack, ZONE_LEFT, ZONE_TOP, ZONE_RIGHT + 60, ZONE_BOTTOM + 60);
 
 		DrawTank(hdcBack);
+
+		T0 = 1;
+		while (T1) {
+			Sleep(10);
+		}
 		DrawShell(hdcBack);
+		T0 = 0;
+
 		DrawWall(hdcBack);
 
 		Rectangle(hdcBack, 0, 0, ZONE_LEFT, ZONE_BOTTOM + 60);
 		Rectangle(hdcBack, ZONE_RIGHT + 60, ZONE_TOP, 1600, 900);
 		DrawAllTank(hdcBack);
-
-		T0 = 0;
 
 		hdc = BeginPaint(hWnd, &ps);
 
@@ -201,27 +206,25 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wcex.lpszClassName = GameZonelassClass;
 	RegisterClassEx(&wcex);
 
+	InitializationWall();
+	InitializationShell();
+	InitializationTank(5);
+	InitializationAI();
+
+	thDraw = (HANDLE)_beginthread(Draw, 0, 0);
+	thGame = (HANDLE)_beginthread(Game, 0, 0);
+	thReload = (HANDLE)_beginthread(Reload, 0, 0);
+
 	// Создание окна
 	hwndGameWindow = CreateWindowEx(0, GameZonelassClass, GameZonelassClass, WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 									0, 0, 1600, 940, 0, 0, 0, NULL);
-	
+
 	hmndProgressBar = CreateWindowEx(PBS_SMOOTH, PROGRESS_CLASS, L"Reload", WS_CHILD | WS_VISIBLE,
 									 ZONE_RIGHT+85, 10, 280, 40, hwndGameWindow, 0, 0, NULL);
 
 	SendMessage(hmndProgressBar, PBM_SETRANGE, 0, MAKELPARAM(0, 8));
 	SendMessage(hmndProgressBar, PBM_SETSTEP, 1, 0);
 	SendMessage(hmndProgressBar, PBM_DELTAPOS, 8, 0);
-	
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	InitializationWall();
-	InitializationShell();
-	InitializationTank(1);
-
-	thDraw = (HANDLE)_beginthread(Draw, 0, 0);
-	thGame = (HANDLE)_beginthread(Game, 0, 0);
-	thReload = (HANDLE)_beginthread(Reload, 0, 0);
-
-	int i = 0;
 
 	while (GetMessage(&msg, 0, 0, 0))
 	{

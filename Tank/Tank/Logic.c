@@ -276,22 +276,17 @@ void InitializationAI() {
 unsigned char m[100], j = 0;
 
 void WayAI() {
-	m;
 	unsigned char cell;
 	for (int i = 1; i < numbTank; i++) {
 		if (0 < tank[i].hp && 0 == tank[i].move) {
 			cell = NIL;
 			while (NIL == cell) {
-				m[j] = rand() % 4;
-				j++;
 				cell = gridMove[tank[i].cell].cell[rand() % 4];
 			}
 			tank[i].move = 1;
 			tank[i].cell = cell;
 		}
 	}
-	m[j] = NIL;
-	j++;
 }
 
 void MoveAI() {

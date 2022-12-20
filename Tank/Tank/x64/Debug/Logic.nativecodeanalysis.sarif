@@ -1,0 +1,67 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.34.31933.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///d:/wps/кпо/с/курсач/tank/tank/tank/logic.c"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "39ac1ecf9c3ae01673103008beb67f927887beff914472998cb80cd5bc3b9118"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/wps/кпо/с/курсач/tank/tank/tank/logic.h"
+          },
+          "hashes": {
+            "sha-256": "30376ed985f951c088ea105b2056b25762f13e12b72cae316b1d921a727bbe77"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/wps/кпо/с/курсач/tank/tank/tank/wall.h"
+          },
+          "hashes": {
+            "sha-256": "16d03cb01e0f47f04f29c03dd692a83689c9099bb6a229e2e992bca6b8c244a9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/wps/кпо/с/курсач/tank/tank/tank/tank.h"
+          },
+          "hashes": {
+            "sha-256": "79a33025510c2378918c8cd1215875c9bd8c711c4216b4258558f11ebd180a0a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/wps/кпо/с/курсач/tank/tank/tank/shell.h"
+          },
+          "hashes": {
+            "sha-256": "e2ca3e01e34152d4ff8c4849aa332b70c373190dd1f77c58dba01acb7e56a994"
+          }
+        }
+      ]
+    }
+  ]
+}

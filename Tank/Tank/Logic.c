@@ -15,10 +15,11 @@ typedef struct _GRID_MOVE {
 }GRID_MOVE;
 
 GRID_MOVE gridMove[19];
+char game = 1;
 
 
 void Shot(unsigned char numb) {
-	if (0==tank[numb].timeToReload) {
+	if (0==tank[numb].timeToReload && 0!=tank[numb].hp) {
 		tank[numb].timeToReload = tank[numb].reload;
 		SHELL* now = NULL;
 		while (NULL == now) {
@@ -342,4 +343,13 @@ void AI() {
 	WayAI();
 	MoveAI();
 
+}
+
+void CheckGame() {
+	game = 0;
+	for (int i = 1; i < numbTank; i++) {
+		if (0 != tank[i].hp) {
+			game = 1;
+		}
+	}
 }

@@ -6,6 +6,7 @@
 #include "Wall.h"
 #include "Shell.h"
 #include "Logic.h"
+#include "resource.h"
 
 #define KEY_W 87
 #define KEY_D 68
@@ -18,18 +19,16 @@
 #define BUTTON_REST 1
 
 // Класс игрового окна
-const wchar_t* const GameZonelassClass = L"Танчики";
+const wchar_t* const GameZonelassClass = L"Мир танков";
 
 HDC      hdcBack;
 HBITMAP  hbmBack;
-RECT     rcClient;
+RECT     rcClient,rcText;
 HANDLE	 thGame, thDraw, thReload;
-HWND	  hwndGameWindow,hmndProgressBar,hwndRest;
+HWND	 hwndGameWindow,hmndProgressBar,hwndRest;
 
 char T0=0, T1=0;
 char F0=1, F1=1, F2=1;
-char game = 0;
-
 
 void InitializeBackBuffer(HWND hWnd, int w, int h)
 {
@@ -76,6 +75,7 @@ void  Game() {
 		CheckingCollisionsShell();
 		T1 = 0;
 		AI();
+		CheckGame();
 		Sleep(GameSpeed);
 	}
 	F1 = 1;
@@ -110,8 +110,6 @@ void  Reload() {
 	F2 = 1;
 }
 
-
-
 // Оконная процедура
 LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	PAINTSTRUCT ps;
@@ -122,6 +120,7 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 	case WM_CREATE:
 		GetClientRect(hWnd, &rcClient);
 		InitializeBackBuffer(hWnd, rcClient.right, rcClient.bottom);
+		SetRect(&rcText, 700, 350, 900, 450);
 		break;
 
 	case WM_SIZE:
@@ -131,26 +130,17 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_COMMAND:
-		if (BUTTON_REST == LOWORD(wParam)) {
-			F0 = 0;
-			F1 = 0;
-			F2 = 0;
-			while (!F0 || !F1 || !F2) {
-				Sleep(500);
-			}
-
+		if (BUTTON_REST == LOWORD(wParam)) {       
 			FinalizeTank();
 			FinalizeShell();
 			FinalizeWall();
+
+			game = 1;
 
 			InitializationWall();
 			InitializationShell();
 			InitializationTank(5);
 			InitializationAI();
-
-			thDraw = (HANDLE)_beginthread(Draw, 0, 0);
-			thGame = (HANDLE)_beginthread(Game, 0, 0);
-			thReload = (HANDLE)_beginthread(Reload, 0, 0);
 
 			SetFocus(hwndGameWindow);
 		}
@@ -178,10 +168,8 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 
 	// Риссования
 	case WM_PAINT:
-
 		Rectangle(hdcBack, ZONE_LEFT, ZONE_TOP, ZONE_RIGHT + 60, ZONE_BOTTOM + 60);
-
-		if (0 == game) {
+		if (game && 0!=tank[PLAYER].hp) {
 			DrawTank(hdcBack);
 
 			T0 = 1;
@@ -192,6 +180,14 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 			T0 = 0;
 
 			DrawWall(hdcBack);
+		}
+		else {
+			if (0==tank[PLAYER].hp) {
+				DrawText(hdcBack, L"YOU DIED", 8, &rcText, DT_CENTER);
+			}
+			else {
+				DrawText(hdcBack, L"YOU WIN", 7, &rcText, DT_CENTER);
+			}
 		}
 
 		Rectangle(hdcBack, 0, 0, ZONE_LEFT, ZONE_BOTTOM + 60);
@@ -231,6 +227,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wcex.style = CS_GLOBALCLASS;
 	wcex.lpfnWndProc = GameZoneProc;
 	wcex.hCursor = LoadCursor(0, IDC_ARROW);
+	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON2));
+	wcex.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON2));
 
 	// Поменять цвет!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	wcex.hbrBackground = (HBRUSH)(COLOR_BACKGROUND + 1);
@@ -271,4 +269,3 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// Зачем !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	return msg.wParam;
 }
-

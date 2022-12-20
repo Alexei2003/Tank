@@ -135,9 +135,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Shell.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Wall.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="game.ico" />
+    <Image Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Tank.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

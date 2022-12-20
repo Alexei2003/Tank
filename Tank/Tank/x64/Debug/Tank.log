@@ -1,6 +1,12 @@
 ﻿  GameZone.c
-D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(244,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
-D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(245,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
-D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(246,40): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
-D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(270,12): warning C4244: return: преобразование "WPARAM" в "INT", возможна потеря данных
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(195,22): warning C4133: функция: несовместимые типы - из "HDC" в "HWND"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(195,26): warning C4047: функция: "HDC" отличается по уровням косвенного обращения от "int"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(195,25): warning C4024: ReleaseDC: различные типы для формального и фактического параметров 2
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(202,22): warning C4133: функция: несовместимые типы - из "HDC" в "HWND"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(202,26): warning C4047: функция: "HDC" отличается по уровням косвенного обращения от "int"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(202,25): warning C4024: ReleaseDC: различные типы для формального и фактического параметров 2
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(258,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(259,36): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(260,40): warning C4113: "void (__cdecl *)()" отличается в списках параметров от "_beginthread_proc_type"
+D:\WPS\КПО\С\Курсач\Tank\Tank\Tank\GameZone.c(286,12): warning C4244: return: преобразование "WPARAM" в "INT", возможна потеря данных
   Tank.vcxproj -> D:\WPS\КПО\С\Курсач\Tank\Tank\x64\Debug\Tank.exe

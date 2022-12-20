@@ -12,6 +12,7 @@
 #define KEY_D 68
 #define KEY_S 83
 #define KEY_A 65
+#define KEY_R 82
 #define KEY_SPACE 32
 #define FrameTime 33
 #define GameSpeed 50
@@ -26,6 +27,7 @@ HBITMAP  hbmBack;
 RECT     rcClient,rcText;
 HANDLE	 thGame, thDraw, thReload;
 HWND	 hwndGameWindow,hmndProgressBar,hwndRest;
+HFONT    hfText;
 
 char T0=0, T1=0;
 char F0=1, F1=1, F2=1;
@@ -120,7 +122,7 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 	case WM_CREATE:
 		GetClientRect(hWnd, &rcClient);
 		InitializeBackBuffer(hWnd, rcClient.right, rcClient.bottom);
-		SetRect(&rcText, 700, 350, 900, 450);
+		SetRect(&rcText, 500, 400, 1100, 500);
 		break;
 
 	case WM_SIZE:
@@ -163,6 +165,9 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		case KEY_SPACE:
 			Shot(PLAYER);
 			break;
+		case KEY_R:
+			SendMessage(hwndGameWindow, WM_COMMAND, BUTTON_REST, 0);
+			break;
 		}
 		break;
 
@@ -183,10 +188,18 @@ LRESULT CALLBACK GameZoneProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		}
 		else {
 			if (0==tank[PLAYER].hp) {
+				SaveDC(hdcBack);
+				SetTextColor(hdcBack,RGB(255,0,0));
+				SelectObject(hdcBack, hfText);
 				DrawText(hdcBack, L"YOU DIED", 8, &rcText, DT_CENTER);
+				ReleaseDC(hdcBack, -1);
 			}
 			else {
+				SaveDC(hdcBack);
+				SetTextColor(hdcBack, RGB(0,255,0));
+				SelectObject(hdcBack, hfText);
 				DrawText(hdcBack, L"YOU WIN", 7, &rcText, DT_CENTER);
+				ReleaseDC(hdcBack, -1);
 			}
 		}
 
@@ -240,6 +253,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InitializationTank(5);
 	InitializationAI();
 
+	hfText = CreateFont(100,0,0,FW_BOLD,0,0,0,0,0,0,0,0,0,0);
 
 	thDraw = (HANDLE)_beginthread(Draw, 0, 0);
 	thGame = (HANDLE)_beginthread(Game, 0, 0);
@@ -262,6 +276,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		DispatchMessage(&msg);
 	}
+
+	DeleteObject(hfText);
 	FinalizeTank();
 	FinalizeShell();
 	FinalizeWall();

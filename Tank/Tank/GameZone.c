@@ -19,7 +19,7 @@
 #define BUTTON_REST 1
 
 // Класс игрового окна
-const wchar_t* const GameZonelassClass = L"Мир танков";
+const wchar_t* const GameZonelassClass = L"Танчики";
 
 HDC      hdcBack;
 HBITMAP  hbmBack;
